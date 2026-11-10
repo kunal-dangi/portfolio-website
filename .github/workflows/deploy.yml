@@ -1,0 +1,26 @@
+# Deploys to Vercel on every push to main. Used instead of Vercel's Git integration.
+# Needs one repo secret: VERCEL_TOKEN (create at vercel.com/account/tokens).
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_P7Jouckr1rHW6c66Svs7cSQb
+      VERCEL_PROJECT_ID: prj_xTece4P4ajSxlXeEziYGRYzVttL7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Self-check chat API
+        run: node tests/chat.test.js
+      - name: Deploy
+        run: npx --yes vercel@65.14.0 deploy --prod --yes --token="${{ secrets.VERCEL_TOKEN }}"

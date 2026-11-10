@@ -15,6 +15,8 @@ It includes a chatbot ("Ask the surveyor") that answers questions about Kunal. I
 
 ## Deploy
 
+Every push to `main` deploys automatically through GitHub Actions (`.github/workflows/deploy.yml`, needs the `VERCEL_TOKEN` repo secret). To deploy by hand:
+
 ```bash
 npx vercel deploy --prod
 ```
